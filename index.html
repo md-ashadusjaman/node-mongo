@@ -15,5 +15,30 @@
     <button type="submit">Add Product</button>
    </form>
 
+   <div id="htmlProducts">
+
+   </div>
+
+   <script>
+       function loadProducts(){
+        fetch('/products')
+       .then(response => response.json())
+       .then(htmlProducts=>{
+           console.log(htmlProducts)
+           const container = document.getElementById('htmlProducts');
+           
+           htmlProducts.forEach(pd => {
+               const p = document.createElement('p');
+               p.innerHTML = `<strong>Name: ${pd.name}</strong> Price: ${pd.price}`;
+               container.appendChild(p);
+           });
+       })
+       };
+
+       loadProducts();
+
+
+   </script>
+
 </body>
 </html>

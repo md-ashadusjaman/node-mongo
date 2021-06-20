@@ -24,6 +24,15 @@ client.connect(err => {
   const productCollection = client.db("testdb").collection("mydb");
 //   console.log('database connection established')
 
+
+app.get('/products', (req, res) => {
+  // productCollection.find({}).limit(2)
+  productCollection.find({})
+  .toArray((error, documents) => {
+    res.send(documents);
+  })
+})
+
   app.post("/addProduct", (req, res) => {
 
     const product = req.body;
