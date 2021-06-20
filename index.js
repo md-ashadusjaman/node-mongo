@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const ObjectId = require('mongodb').ObjectId;
 
 const MongoClient = require('mongodb').MongoClient;
 
@@ -48,7 +49,16 @@ app.get('/products', (req, res) => {
     // .then (result => {
     // console.log('One Product added successfully')
     })
+
+app.delete('/delete/:id', (req, res) => {
+  // console.log(req.params.id);
+  productCollection.deleteOne({_id: ObjectId(req.params.id)})
+  .then (result => {
+    console.log('deleted')
   })
+})
+
+  });
 
 
   // perform actions on the collection object
