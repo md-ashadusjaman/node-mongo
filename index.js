@@ -49,10 +49,9 @@ app.get('/product/:id', (req, res) => {
     productCollection.insertOne(product)
     .then(result => {
       console.log('data added successfuly')
+      // res.send('Sucessfully Added');
+      res.redirect('/');
     })
-
-
-
     // collection.insertOne(product)
     // .then (result => {
     // console.log('One Product added successfully')
@@ -64,7 +63,8 @@ app.patch('/update/:id', (req, res) => {
     $set: {price: req.body.price, quantity: req.body.quantity}
   })
   .then(result => {
-    console.log(result);
+    // console.log(result);
+    res.send(result.modifiedCount > 0)
   })
 })
 
@@ -73,7 +73,8 @@ app.delete('/delete/:id', (req, res) => {
   // console.log(req.params.id);
   productCollection.deleteOne({_id: ObjectId(req.params.id)})
   .then (result => {
-    console.log('deleted')
+    // console.log('deleted')
+    res.send(result.deletedCount > 0);
   })
 })
 
