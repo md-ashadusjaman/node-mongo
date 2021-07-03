@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const ObjectId = require('mongodb').ObjectId;
 
 const MongoClient = require('mongodb').MongoClient;
+const { ObjectID } = require('mongodb');
 
 
 const uri = "mongodb+srv://testUser:PBzc5XZL9SugTF0C@cluster0.20tqz.mongodb.net/testdb?retryWrites=true&w=majority";
@@ -34,6 +35,13 @@ app.get('/products', (req, res) => {
   })
 })
 
+app.get('/product/:id', (req, res) => {
+  productCollection.find({_id: ObjectID(req.params.id)})
+  .toArray((err, documents) => {
+    res.send(documents[0]);
+  })
+})
+
   app.post("/addProduct", (req, res) => {
 
     const product = req.body;
@@ -49,6 +57,17 @@ app.get('/products', (req, res) => {
     // .then (result => {
     // console.log('One Product added successfully')
     })
+
+app.patch('/update/:id', (req, res) => {
+  productCollection.updateOne({_id: ObjectId(req.params.id)},
+  {
+    $set: {price: req.body.price, quantity: req.body.quantity}
+  })
+  .then(result => {
+    console.log(result);
+  })
+})
+
 
 app.delete('/delete/:id', (req, res) => {
   // console.log(req.params.id);
